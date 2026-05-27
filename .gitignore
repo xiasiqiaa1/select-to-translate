@@ -1,0 +1,21 @@
+# WorkBuddy AI 助手数据
+.workbuddy/
+
+# Python 测试文件
+test_*.py
+test_*.html
+test_*.png
+__pycache__/
+*.pyc
+
+# Playwright 测试残留
+test-profile/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/

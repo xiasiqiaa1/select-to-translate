@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+
+  "name": "选中翻译",
+  "version": "1.0",
+  "description": "选中网页文字后自动弹出翻译弹窗，支持中英互译",
+
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+
+  "permissions": [
+    "activeTab"
+  ],
+
+  "host_permissions": [
+    "https://api.mymemory.translated.net/*"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ]
+}
