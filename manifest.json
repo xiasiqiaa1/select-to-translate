@@ -3,7 +3,7 @@
 
   "name": "选中翻译",
   "version": "1.0",
-  "description": "选中网页文字后自动弹出翻译弹窗，支持中英互译",
+  "description": "选中网页文字自动弹出翻译弹窗，支持多语种互译。兼容 Chrome / Edge / Brave 等 Chromium 内核浏览器",
 
   "icons": {
     "16": "icon16.png",

@@ -1,6 +1,6 @@
-# 选中翻译 (Select-to-Translate)
+# Popup Translate
 
-一个极简的 Chrome 浏览器扩展 — 选中网页文字后自动弹出翻译弹窗，支持多语种互译。
+一个极简的 Chromium 内核浏览器扩展（兼容 Chrome / Edge / Brave / Opera 等），选中网页文字后自动弹出翻译弹窗，支持多语种互译。
 
 ## 功能
 
@@ -17,7 +17,7 @@
 
 ```
 浏览器翻译插件/
-├── manifest.json    # Chrome 扩展清单 (Manifest V3)
+├── manifest.json    # 扩展清单 (Manifest V3，兼容所有 Chromium 内核浏览器)
 ├── content.js       # 核心逻辑：选区监听、翻译请求、弹窗渲染
 ├── styles.css       # 弹窗样式
 ├── icon16.png       # 扩展图标
@@ -29,7 +29,9 @@
 ## 安装
 
 1. 下载本项目到本地
-2. 打开 Chrome，地址栏输入 `chrome://extensions/`
+2. 打开浏览器，在地址栏输入：
+   - Chrome：`chrome://extensions/`
+   - Edge：`edge://extensions/`
 3. 开启右上角「开发者模式」
 4. 点击「加载已解压的扩展程序」，选择本项目的文件夹
 5. 完成！去任意网页选中文字即可看到翻译弹窗
