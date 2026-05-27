@@ -3,7 +3,8 @@
  * =================================================
  * 选中网页上的任意文字后，自动弹出翻译弹窗。
  * 翻译 API：MyMemory (免费，无需密钥)
- * 支持：中↔英互译（自动检测文本语言方向）
+ * 支持语种（自动检测文本语言 → 始终译为中文，中文则译英文）：
+ *   日文(假名) → 中文  |  韩文(谚文) → 中文  |  英文 → 中文  |  中文 → 英文
  *
  * 主要功能：
  * 1. 监听 mouseup 事件 → 捕获选中的文字
@@ -49,6 +50,27 @@ document.addEventListener('mouseup', function(e) {
     }
   }, 100);
 });
+
+/**
+ * 检测文本主要语言，返回 MyMemory API 的 langpair 参数
+ *
+ * 检测优先级（由具体到模糊，避免误判）：
+ *   1. 日文假名（平假名 U+3040-309F / 片假名 U+30A0-30FF）→ ja|zh
+ *   2. 韩文谚文（音节 U+AC00-D7AF / 字母 U+1100-11FF）  → ko|zh
+ *   3. 中文汉字（CJK 统一表意文字 U+4E00-9FA5）           → zh|en
+ *   4. 其他（默认视为英文）                                → en|zh
+ *
+ * 日文先于中文检测：日文中常混有汉字，但假名是日文独有特征。
+ *
+ * @param {string} text - 待检测文本
+ * @returns {string} MyMemory langpair，如 "ko|zh" 或 "en|zh"
+ */
+function detectLangPair(text) {
+  if (/[\u3040-\u309F\u30A0-\u30FF]/.test(text)) return 'ja|zh';
+  if (/[\uAC00-\uD7AF\u1100-\u11FF]/.test(text)) return 'ko|zh';
+  if (/[\u4e00-\u9fa5]/.test(text))             return 'zh|en';
+  return 'en|zh';
+}
 
 /**
  * 创建并显示翻译弹窗，执行翻译请求
@@ -122,8 +144,7 @@ async function showTranslationPopup(text, x, y) {
 
   // ---- 翻译请求 ----
   try {
-    // 自动判断语言方向：含中文字符 → 中译英；否则 → 英译中
-    const langPair = /[\u4e00-\u9fa5]/.test(text) ? 'zh|en' : 'en|zh';
+    const langPair = detectLangPair(text);
     const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langPair}`;
 
     // AbortController 实现 8 秒超时
